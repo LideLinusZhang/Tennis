@@ -17,5 +17,10 @@ namespace TennisBole
             InitializeComponent();
         }
 
+        private void buttonAgeLimits_Click(object sender, EventArgs e)
+        {
+            FormAgeLimits f = new FormAgeLimits();
+            f.ShowDialog();
+        }
     }
 }
