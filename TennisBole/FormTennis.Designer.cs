@@ -128,7 +128,7 @@ namespace TennisBole
             this.buttonShowData.Size = new System.Drawing.Size(194, 85);
             this.buttonShowData.TabIndex = 2;
             this.buttonShowData.Text = "Show Data";
-            this.buttonShowData.UseVisualStyleBackColor = false;
+            this.buttonShowData.UseVisualStyleBackColor = true;
             this.buttonShowData.Click += new System.EventHandler(this.buttonShowData_Click);
             // 
             // buttonWeight
