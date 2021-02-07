@@ -13,6 +13,7 @@ namespace TennisBole
 {
     public static class TennisDataProcessor
     {
+        private static readonly string DoubleToStringFormat = "N2";
         private class TennisRawData
         {
             public class Player : IEquatable<Player>
@@ -85,10 +86,10 @@ namespace TennisBole
             }
         }
         private static readonly double RankingNotAvailable = 0.0;
-        private static string DataNotAvailableString = "N/A";
+        private static readonly string DataNotAvailableOutputString = "N/A";
         public static void ImportCSV(string UTRFileName, string ATPFileName)
         {
-            const string DataNotAvailable = "None";
+            const string InputDataNotAvailable = "None";
 
             Players.Clear();
 
@@ -99,9 +100,9 @@ namespace TennisBole
 
             foreach (TennisRawData.Player UTRPlayer in UTR.Players)
             {
-                if (UTRPlayer.Age.Equals(DataNotAvailable) ||
-                    UTRPlayer.Nationality.Equals(DataNotAvailable) ||
-                    UTRPlayer.Gender.Equals(DataNotAvailable))
+                if (UTRPlayer.Age.Equals(InputDataNotAvailable) ||
+                    UTRPlayer.Nationality.Equals(InputDataNotAvailable) ||
+                    UTRPlayer.Gender.Equals(InputDataNotAvailable))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -135,9 +136,9 @@ namespace TennisBole
 
             foreach (TennisRawData.Player ATPPlayer in ATP.Players)
             {
-                if (ATPPlayer.Age.Equals(DataNotAvailable) ||
-                    ATPPlayer.Nationality.Equals(DataNotAvailable) ||
-                    ATPPlayer.Gender.Equals(DataNotAvailable))
+                if (ATPPlayer.Age.Equals(InputDataNotAvailable) ||
+                    ATPPlayer.Nationality.Equals(InputDataNotAvailable) ||
+                    ATPPlayer.Gender.Equals(InputDataNotAvailable))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -181,14 +182,16 @@ namespace TennisBole
             foreach (Player player in toBeEliminated)
                 Players.Remove(player);
         }
-        private static readonly double MinimumUTRRanking = 11.0;
+
         private static void EliminateLowUTRPlayer()
         {
+            const double MinimumUTRRankingAcceptable = 11.0;
+
             List<Player> toBeEliminated = new List<Player>();
 
             foreach (Player player in Players)
             {
-                if (player.UTR < MinimumUTRRanking)
+                if (player.UTR < MinimumUTRRankingAcceptable)
                     toBeEliminated.Add(player);
             }
 
@@ -198,6 +201,7 @@ namespace TennisBole
         private static void CalculateMyRank()
         {
             int maxATP = 0;
+
             foreach (Player player in Players)
             {
                 if (player.ATP > maxATP)
@@ -238,11 +242,11 @@ namespace TennisBole
                 item.SubItems.Add(player.Gender);
                 item.SubItems.Add(IOCConverter.CodeToCountryName(player.Nationality));
                 if (player.UTR == RankingNotAvailable)
-                    item.SubItems.Add(DataNotAvailableString);
+                    item.SubItems.Add(DataNotAvailableOutputString);
                 else
                     item.SubItems.Add(player.UTR.ToString(DoubleToStringFormat));
                 if (player.ATP == RankingNotAvailable)
-                    item.SubItems.Add(DataNotAvailableString);
+                    item.SubItems.Add(DataNotAvailableOutputString);
                 else
                     item.SubItems.Add(player.ATP.ToString());
                 item.SubItems.Add(player.MyRank.ToString(DoubleToStringFormat));
@@ -252,9 +256,10 @@ namespace TennisBole
 
             return items;
         }
-        public static int GlobalMaxAge { get; set; } = DefaultGlobalMaxAge;
+
         public static readonly int NoGlobalMaxAge = -1;
         public static readonly int DefaultGlobalMaxAge = 18;
+        public static int GlobalMaxAge { get; set; } = DefaultGlobalMaxAge;
         public record SpecificLimit
         {
             public string Nationality;
@@ -336,7 +341,7 @@ namespace TennisBole
                 if (country.AvgATP != RankingNotAvailable)
                     countryItem.SubItems.Add(Convert.ToInt32(country.AvgATP).ToString());
                 else
-                    countryItem.SubItems.Add(DataNotAvailableString);
+                    countryItem.SubItems.Add(DataNotAvailableOutputString);
                 countryItem.SubItems.Add(country.AvgMyRank.ToString(DoubleToStringFormat));
 
                 countryListViewItems.Add(countryItem);
@@ -344,6 +349,5 @@ namespace TennisBole
 
             return countryListViewItems;
         }
-        private static string DoubleToStringFormat = "N2";
     }
 }
