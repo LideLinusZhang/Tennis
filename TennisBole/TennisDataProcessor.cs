@@ -200,5 +200,9 @@ namespace TennisBole
             public int Age;
         }
         public static List<SpecificLimit> SpecificLimits { get; set; } = new List<SpecificLimit>();
+
+        public static readonly int DefaultWeight = 50;
+        public static int UTRWeight { get; set; } = DefaultWeight;
+        public static int ATPWeight { get; set; } = DefaultWeight;
     }
 }

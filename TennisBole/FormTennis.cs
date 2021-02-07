@@ -26,5 +26,15 @@ namespace TennisBole
             FormAgeLimits f = new FormAgeLimits();
             f.ShowDialog();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listViewPlayers.BeginUpdate();
+            listViewPlayers.Items.Clear();
+            listViewPlayers.EndUpdate();
+
+            FormSourceWeight f = new FormSourceWeight();
+            f.ShowDialog();
+        }
     }
 }
