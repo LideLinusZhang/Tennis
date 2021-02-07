@@ -15,8 +15,8 @@ namespace TennisBole
     {
         private Process UTRFetcherProcess = new Process();
         private Process ATPFetcherProcess = new Process();
-        private static readonly string UTRFetcherFileName = "notepad.exe";
-        private static readonly string ATPFetcherFileName = "notepad.exe";
+        private static readonly string UTRFetcherFileName = "utr_fetcher.exe";
+        private static readonly string ATPFetcherFileName = "atp_fetcher.exe";
 
         private static readonly string BothRunning = "Fetching UTR and ATP data now. Please wait.";
         private static readonly string ATPDone = "ATP fetching finished. Fetching UTR data now. Please wait.";
