@@ -219,7 +219,7 @@ namespace TennisBole
         private static double CalculateMyRank(double UTR, int ATP, int maxATP)
         {
             const double MyRankMax = 16.5;
-            double processedATP = (MyRankMax - 1) * ((maxATP - ATP + 1) / maxATP) + 1;
+            double processedATP = (MyRankMax - 1) * ((maxATP - ATP + 1.0) / maxATP) + 1;
             return (UTR * UTRWeight + processedATP * ATPWeight) / 100;
         }
         public static List<ListViewItem> GetPlayerListViewItems()
