@@ -84,7 +84,7 @@ namespace TennisBole
                 else return false;
             }
         }
-        private static readonly double RankingNotAvailable = -1.0;
+        private static readonly double RankingNotAvailable = 0.0;
         private static string DataNotAvailableString = "N/A";
         public static void ImportCSV(string UTRFileName, string ATPFileName)
         {
@@ -277,7 +277,8 @@ namespace TennisBole
             public double AvgATP;
             public double AvgMyRank;
 
-            public int TotalPlayers;
+            public int TotalUTRPlayers;
+            public int TotalATPPlayers;
         }
         private static List<Country> Countries { get; set; } = new List<Country>();
         private static void GenerateCountryData()
@@ -288,9 +289,11 @@ namespace TennisBole
                 {
                     Country country = Countries.FindLast((x) => x.Code.Equals(player.Nationality));
 
-                    country.TotalPlayers++;
+                    country.TotalUTRPlayers++;
                     country.SumUTR += player.UTR;
                     country.SumATP += player.ATP;
+                    if (player.ATP != RankingNotAvailable)
+                        country.TotalATPPlayers++;
                     country.SumMyRank += player.MyRank;
                 }
                 else
@@ -298,9 +301,13 @@ namespace TennisBole
                     Country country = new Country();
 
                     country.Code = player.Nationality;
-                    country.TotalPlayers = 1;
+                    country.TotalUTRPlayers = 1;
                     country.SumUTR = player.UTR;
                     country.SumATP = player.ATP;
+                    if (player.ATP != RankingNotAvailable)
+                        country.TotalATPPlayers = 1;
+                    else
+                        country.TotalATPPlayers = 0;
                     country.SumMyRank = player.MyRank;
 
                     Countries.Add(country);
@@ -309,9 +316,9 @@ namespace TennisBole
 
             Countries.ForEach((x) =>
             {
-                x.AvgUTR = x.SumUTR / x.TotalPlayers;
-                x.AvgATP = x.SumATP / x.TotalPlayers;
-                x.AvgMyRank = x.SumMyRank / x.TotalPlayers;
+                x.AvgUTR = x.SumUTR / x.TotalUTRPlayers;
+                x.AvgATP = x.SumATP / x.TotalATPPlayers;
+                x.AvgMyRank = x.SumMyRank / x.TotalUTRPlayers;
             });
             Countries.Sort((x, y) => -x.AvgMyRank.CompareTo(y.AvgMyRank));
         }
@@ -323,10 +330,10 @@ namespace TennisBole
             foreach (Country country in Countries)
             {
                 ListViewItem countryItem = new ListViewItem(IOCConverter.CodeToCountryName(country.Code));
-                countryItem.SubItems.Add(country.TotalPlayers.ToString());
+                countryItem.SubItems.Add(country.TotalUTRPlayers.ToString());
                 countryItem.SubItems.Add(country.AvgUTR.ToString(DoubleToStringFormat));
-                if(country.AvgATP!=RankingNotAvailable)
-                    countryItem.SubItems.Add(country.AvgATP.ToString());
+                if (country.AvgATP != RankingNotAvailable)
+                    countryItem.SubItems.Add(Convert.ToInt32(country.AvgATP).ToString());
                 else
                     countryItem.SubItems.Add(DataNotAvailableString);
                 countryItem.SubItems.Add(country.AvgMyRank.ToString(DoubleToStringFormat));
