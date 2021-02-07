@@ -38,6 +38,8 @@ namespace TennisBole
             this.columnHeaderATP = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderMyRank = new System.Windows.Forms.ColumnHeader();
             this.buttonAgeLimits = new System.Windows.Forms.Button();
+            this.buttonShowData = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listViewPlayers
@@ -105,11 +107,31 @@ namespace TennisBole
             this.buttonAgeLimits.UseVisualStyleBackColor = true;
             this.buttonAgeLimits.Click += new System.EventHandler(this.buttonAgeLimits_Click);
             // 
+            // buttonShowData
+            // 
+            this.buttonShowData.Location = new System.Drawing.Point(12, 334);
+            this.buttonShowData.Name = "buttonShowData";
+            this.buttonShowData.Size = new System.Drawing.Size(194, 77);
+            this.buttonShowData.TabIndex = 2;
+            this.buttonShowData.Text = "Show Data";
+            this.buttonShowData.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 54);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(194, 36);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Source Weight Setting";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // FormTennis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 423);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonShowData);
             this.Controls.Add(this.buttonAgeLimits);
             this.Controls.Add(this.listViewPlayers);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -131,6 +153,8 @@ namespace TennisBole
         private System.Windows.Forms.ColumnHeader columnHeaderATP;
         private System.Windows.Forms.ColumnHeader columnHeaderMyRank;
         private System.Windows.Forms.Button buttonAgeLimits;
+        private System.Windows.Forms.Button buttonShowData;
+        private System.Windows.Forms.Button button1;
     }
 }
 

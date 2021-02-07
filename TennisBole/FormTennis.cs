@@ -19,6 +19,10 @@ namespace TennisBole
 
         private void buttonAgeLimits_Click(object sender, EventArgs e)
         {
+            listViewPlayers.BeginUpdate();
+            listViewPlayers.Items.Clear();
+            listViewPlayers.EndUpdate();
+
             FormAgeLimits f = new FormAgeLimits();
             f.ShowDialog();
         }
