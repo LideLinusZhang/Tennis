@@ -85,6 +85,7 @@ namespace TennisBole
             }
         }
         private static readonly double RankingNotAvailable = -1.0;
+        private static string DataNotAvailableString = "N/A";
         public static void ImportCSV(string UTRFileName, string ATPFileName)
         {
             const string DataNotAvailable = "None";
@@ -223,8 +224,6 @@ namespace TennisBole
         }
         public static List<ListViewItem> GetPlayerListViewItems()
         {
-            const string DataNotAvailable = "N/A";
-
             TennisDataProcessor.EliminateOverAgedPlayer();
             TennisDataProcessor.EliminateLowUTRPlayer();
             TennisDataProcessor.CalculateMyRank();
@@ -239,11 +238,11 @@ namespace TennisBole
                 item.SubItems.Add(player.Gender);
                 item.SubItems.Add(IOCConverter.CodeToCountryName(player.Nationality));
                 if (player.UTR == RankingNotAvailable)
-                    item.SubItems.Add(DataNotAvailable);
+                    item.SubItems.Add(DataNotAvailableString);
                 else
                     item.SubItems.Add(player.UTR.ToString(DoubleToStringFormat));
                 if (player.ATP == RankingNotAvailable)
-                    item.SubItems.Add(DataNotAvailable);
+                    item.SubItems.Add(DataNotAvailableString);
                 else
                     item.SubItems.Add(player.ATP.ToString());
                 item.SubItems.Add(player.MyRank.ToString(DoubleToStringFormat));
@@ -326,7 +325,10 @@ namespace TennisBole
                 ListViewItem countryItem = new ListViewItem(IOCConverter.CodeToCountryName(country.Code));
                 countryItem.SubItems.Add(country.TotalPlayers.ToString());
                 countryItem.SubItems.Add(country.AvgUTR.ToString(DoubleToStringFormat));
-                countryItem.SubItems.Add(country.AvgATP.ToString(DoubleToStringFormat));
+                if(country.AvgATP!=RankingNotAvailable)
+                    countryItem.SubItems.Add(country.AvgATP.ToString(DoubleToStringFormat));
+                else
+                    countryItem.SubItems.Add(DataNotAvailableString);
                 countryItem.SubItems.Add(country.AvgMyRank.ToString(DoubleToStringFormat));
 
                 countryListViewItems.Add(countryItem);

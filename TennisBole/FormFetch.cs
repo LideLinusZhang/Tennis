@@ -27,11 +27,13 @@ namespace TennisBole
             InitializeComponent();
 
             UTRFetcherProcess.StartInfo.FileName = UTRFetcherFileName;
+            UTRFetcherProcess.StartInfo.CreateNoWindow = true;
             UTRFetcherProcess.Exited += UTRFetcherProcess_Exited;
             UTRFetcherProcess.EnableRaisingEvents = true;
             UTRFetcherProcess.Start();
 
             ATPFetcherProcess.StartInfo.FileName = ATPFetcherFileName;
+            ATPFetcherProcess.StartInfo.CreateNoWindow = true;
             ATPFetcherProcess.Exited += ATPFetcherProcess_Exited;
             ATPFetcherProcess.EnableRaisingEvents = true;
             ATPFetcherProcess.Start();
@@ -95,6 +97,11 @@ namespace TennisBole
 
         private void FormFetch_FormClosed(object sender, FormClosedEventArgs e)
         {
+            if (!UTRFetcherProcess.HasExited)
+                UTRFetcherProcess.Kill();
+            if (!ATPFetcherProcess.HasExited)
+                ATPFetcherProcess.Kill();
+
             UTRFetcherProcess.Close();
             ATPFetcherProcess.Close();
         }

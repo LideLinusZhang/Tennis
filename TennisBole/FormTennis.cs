@@ -24,6 +24,9 @@ namespace TennisBole
             }
             else
                 buttonUpdate.Text = "Fetch Data";
+
+            listViewCountry.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            listViewPlayers.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
         }
         private readonly string UTRDataFileName = "utr_data.csv";
         private readonly string ATPDataFileName = "atp_data.csv";
@@ -60,13 +63,17 @@ namespace TennisBole
         {
             listViewPlayers.BeginUpdate();
             foreach (ListViewItem playerItem in TennisDataProcessor.GetPlayerListViewItems())
-                listViewPlayers.Items.Add(playerItem);
+                listViewPlayers.Items.Add(playerItem); 
+            listViewPlayers.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             listViewPlayers.EndUpdate();
 
             listViewCountry.BeginUpdate();
             foreach (ListViewItem countryItem in TennisDataProcessor.GetCountryListViewItems())
                 listViewCountry.Items.Add(countryItem);
+            listViewCountry.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             listViewCountry.EndUpdate();
+
+
         }
 
         private void buttonUpdate_Click(object sender, EventArgs e)
@@ -78,6 +85,11 @@ namespace TennisBole
             f.ShowDialog();
 
             buttonShowData.Enabled = true;
+        }
+
+        private void FormTennis_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            System.Environment.Exit(0);
         }
     }
 }

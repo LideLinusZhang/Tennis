@@ -29,6 +29,7 @@ namespace TennisBole
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormTennis));
             this.listViewPlayers = new System.Windows.Forms.ListView();
             this.columnHeaderName = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderAge = new System.Windows.Forms.ColumnHeader();
@@ -241,9 +242,11 @@ namespace TennisBole
             this.Controls.Add(this.buttonAgeLimits);
             this.Controls.Add(this.listViewPlayers);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormTennis";
             this.Text = "Tennis Bole";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormTennis_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 
