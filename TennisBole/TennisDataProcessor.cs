@@ -87,6 +87,8 @@ namespace TennisBole
         private static readonly double RankingNotAvailable = -1.0;
         public static void ImportCSV(string UTRFileName, string ATPFileName)
         {
+            const string DataNotAvailable = "None";
+
             Players.Clear();
 
             UTR.ImportCSV(UTRFileName);
@@ -96,9 +98,9 @@ namespace TennisBole
 
             foreach (TennisRawData.Player UTRPlayer in UTR.Players)
             {
-                if (UTRPlayer.Age.Equals("None") ||
-                    UTRPlayer.Nationality.Equals("None") ||
-                    UTRPlayer.Gender.Equals("None"))
+                if (UTRPlayer.Age.Equals(DataNotAvailable) ||
+                    UTRPlayer.Nationality.Equals(DataNotAvailable) ||
+                    UTRPlayer.Gender.Equals(DataNotAvailable))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -132,9 +134,9 @@ namespace TennisBole
 
             foreach (TennisRawData.Player ATPPlayer in ATP.Players)
             {
-                if (ATPPlayer.Age.Equals("None") ||
-                    ATPPlayer.Nationality.Equals("None") ||
-                    ATPPlayer.Gender.Equals("None"))
+                if (ATPPlayer.Age.Equals(DataNotAvailable) ||
+                    ATPPlayer.Nationality.Equals(DataNotAvailable) ||
+                    ATPPlayer.Gender.Equals(DataNotAvailable))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -208,6 +210,8 @@ namespace TennisBole
         }
         public static List<ListViewItem> GetPlayerListViewItems()
         {
+            const string DataNotAvailable = "N/A";
+
             TennisDataProcessor.EliminateOverAgedPlayer();
             TennisDataProcessor.EliminateLowUTRPlayer();
             TennisDataProcessor.CalculateMyRank();
@@ -222,14 +226,14 @@ namespace TennisBole
                 item.SubItems.Add(player.Gender);
                 item.SubItems.Add(IOCConverter.CodeToCountryName(player.Nationality));
                 if (player.UTR == RankingNotAvailable)
-                    item.SubItems.Add("N/A");
+                    item.SubItems.Add(DataNotAvailable);
                 else
-                    item.SubItems.Add(player.UTR.ToString("N2"));
+                    item.SubItems.Add(player.UTR.ToString(DoubleToStringFormat));
                 if (player.ATP == RankingNotAvailable)
-                    item.SubItems.Add("N/A");
+                    item.SubItems.Add(DataNotAvailable);
                 else
-                    item.SubItems.Add(player.ATP.ToString("N2"));
-                item.SubItems.Add(player.MyRank.ToString("N2"));
+                    item.SubItems.Add(player.ATP.ToString(DoubleToStringFormat));
+                item.SubItems.Add(player.MyRank.ToString(DoubleToStringFormat));
 
                 items.Add(item);
             }
@@ -308,14 +312,15 @@ namespace TennisBole
             {
                 ListViewItem countryItem = new ListViewItem(IOCConverter.CodeToCountryName(country.Code));
                 countryItem.SubItems.Add(country.TotalPlayers.ToString());
-                countryItem.SubItems.Add(country.AvgUTR.ToString("N2"));
-                countryItem.SubItems.Add(country.AvgATP.ToString("N2"));
-                countryItem.SubItems.Add(country.AvgMyRank.ToString("N2"));
+                countryItem.SubItems.Add(country.AvgUTR.ToString(DoubleToStringFormat));
+                countryItem.SubItems.Add(country.AvgATP.ToString(DoubleToStringFormat));
+                countryItem.SubItems.Add(country.AvgMyRank.ToString(DoubleToStringFormat));
 
                 countryListViewItems.Add(countryItem);
             }
 
             return countryListViewItems;
         }
+        private static string DoubleToStringFormat = "N2";
     }
 }
