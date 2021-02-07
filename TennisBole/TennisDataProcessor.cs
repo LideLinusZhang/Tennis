@@ -34,6 +34,10 @@ namespace TennisBole
                     }
                     else return false;
                 }
+                public override int GetHashCode()
+                {
+                    return string.Concat(Name, Age, Gender, Nationality).GetHashCode();
+                }
             }
             public List<Player> Players { get; set; } = new List<Player>();
             public void ImportCSV(string fileName)
@@ -52,12 +56,14 @@ namespace TennisBole
                         Players.Add(player);
                     }
                 }
+
+                Players = Players.Distinct().ToList();
             }
         }
         private static List<Player> Players { get; set; } = new List<Player>();
         private static TennisRawData UTR = new TennisRawData();
         private static TennisRawData ATP = new TennisRawData();
-        private class Player
+        private class Player : IEquatable<Player>
         {
             public string Name { get; set; }
             public int Age { get; set; }
@@ -65,6 +71,18 @@ namespace TennisBole
             public string Nationality { get; set; }
             public double UTR { get; set; }
             public double ATP { get; set; }
+            public double MyRank { get; set; }
+            public bool Equals(Player other)
+            {
+                if (this.Name.Equals(other.Name) &&
+                    this.Age == other.Age &&
+                    this.Gender.Equals(other.Gender) &&
+                    this.Nationality.Equals(other.Nationality))
+                {
+                    return true;
+                }
+                else return false;
+            }
         }
         private static readonly double RankingNotAvailable = -1.0;
         public static void ImportCSV(string UTRFileName, string ATPFileName)
@@ -74,9 +92,13 @@ namespace TennisBole
             UTR.ImportCSV(UTRFileName);
             ATP.ImportCSV(ATPFileName);
 
+            bool test = UTR.Players[68].Equals(UTR.Players[0]);
+
             foreach (TennisRawData.Player UTRPlayer in UTR.Players)
             {
-                if (UTRPlayer.Age.Equals("None"))
+                if (UTRPlayer.Age.Equals("None") || 
+                    UTRPlayer.Nationality.Equals("None") ||
+                    UTRPlayer.Gender.Equals("None"))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -110,7 +132,9 @@ namespace TennisBole
 
             foreach (TennisRawData.Player ATPPlayer in ATP.Players)
             {
-                if (ATPPlayer.Age.Equals("None"))
+                if (ATPPlayer.Age.Equals("None") ||
+                    ATPPlayer.Nationality.Equals("None") ||
+                    ATPPlayer.Gender.Equals("None"))
                     continue;
 
                 Player combinedPlayer = new Player();
@@ -124,6 +148,8 @@ namespace TennisBole
 
                 Players.Add(combinedPlayer);
             }
+
+            Players = Players.Distinct().ToList();
         }
         public static void EliminateOverAgedPlayer()
         {
@@ -166,6 +192,18 @@ namespace TennisBole
             foreach (Player player in toBeEliminated)
                 Players.Remove(player);
         }
+        public static void CalculateMyRank()
+        {
+            foreach(Player player in Players)
+            {
+                if (player.UTR == RankingNotAvailable)
+                    player.MyRank = player.ATP;
+                else if (player.ATP == RankingNotAvailable)
+                    player.MyRank = player.UTR;
+                else
+                    player.MyRank = (player.UTR * UTRWeight + player.ATP * ATPWeight) / 100;
+            }
+        }
         public static List<ListViewItem> GetListViewItems()
         {
             List<ListViewItem> items = new List<ListViewItem>();
@@ -181,12 +219,12 @@ namespace TennisBole
                     item.SubItems.Add("N/A");
                 else
                     item.SubItems.Add(player.UTR.ToString());
-
                 if (player.ATP == RankingNotAvailable)
                     item.SubItems.Add("N/A");
                 else
                     item.SubItems.Add(player.ATP.ToString());
-                
+                item.SubItems.Add(player.MyRank.ToString());
+
                 items.Add(item);
             }
 

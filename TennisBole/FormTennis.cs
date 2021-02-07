@@ -36,5 +36,18 @@ namespace TennisBole
             FormSourceWeight f = new FormSourceWeight();
             f.ShowDialog();
         }
+
+        private void buttonShowData_Click(object sender, EventArgs e)
+        {
+            TennisDataProcessor.ImportCSV("testUTR.csv", "testATP.csv");
+            TennisDataProcessor.EliminateOverAgedPlayer();
+            TennisDataProcessor.EliminateLowUTRPlayer();
+            TennisDataProcessor.CalculateMyRank();
+
+            listViewPlayers.BeginUpdate();
+            foreach (ListViewItem limitItem in TennisDataProcessor.GetListViewItems())
+                listViewPlayers.Items.Add(limitItem);
+            listViewPlayers.EndUpdate();
+        }
     }
 }

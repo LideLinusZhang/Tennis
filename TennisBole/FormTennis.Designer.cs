@@ -52,10 +52,12 @@ namespace TennisBole
             this.columnHeaderUTR,
             this.columnHeaderATP,
             this.columnHeaderMyRank});
+            this.listViewPlayers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewPlayers.HideSelection = false;
             this.listViewPlayers.Location = new System.Drawing.Point(212, 12);
             this.listViewPlayers.Name = "listViewPlayers";
             this.listViewPlayers.Size = new System.Drawing.Size(617, 399);
+            this.listViewPlayers.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewPlayers.TabIndex = 0;
             this.listViewPlayers.UseCompatibleStateImageBehavior = false;
             this.listViewPlayers.View = System.Windows.Forms.View.Details;
@@ -115,6 +117,7 @@ namespace TennisBole
             this.buttonShowData.TabIndex = 2;
             this.buttonShowData.Text = "Show Data";
             this.buttonShowData.UseVisualStyleBackColor = true;
+            this.buttonShowData.Click += new System.EventHandler(this.buttonShowData_Click);
             // 
             // button1
             // 
