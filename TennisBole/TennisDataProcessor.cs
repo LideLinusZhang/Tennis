@@ -96,8 +96,6 @@ namespace TennisBole
             UTR.ImportCSV(UTRFileName);
             ATP.ImportCSV(ATPFileName);
 
-            bool test = UTR.Players[68].Equals(UTR.Players[0]);
-
             foreach (TennisRawData.Player UTRPlayer in UTR.Players)
             {
                 if (UTRPlayer.Age.Equals(InputDataNotAvailable) ||
@@ -169,7 +167,7 @@ namespace TennisBole
                     if (player.Age > limit.Age)
                         shouldEliminate = true;
                 }
-                else if (GlobalMaxAge != -1)
+                else if (GlobalMaxAge != NoGlobalMaxAge)
                 {
                     if (player.Age > GlobalMaxAge)
                         shouldEliminate = true;
