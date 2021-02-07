@@ -39,11 +39,20 @@ namespace TennisBole
                 return false;
         }
 
-        private void buttonAgeLimits_Click(object sender, EventArgs e)
+        private void ClearListViews()
         {
             listViewPlayers.BeginUpdate();
             listViewPlayers.Items.Clear();
             listViewPlayers.EndUpdate();
+
+            listViewCountry.BeginUpdate();
+            listViewCountry.Items.Clear();
+            listViewCountry.EndUpdate();
+        }
+
+        private void buttonAgeLimits_Click(object sender, EventArgs e)
+        {
+            ClearListViews();
 
             FormAgeLimits f = new FormAgeLimits();
             f.ShowDialog();
@@ -51,9 +60,7 @@ namespace TennisBole
 
         private void buttonWeight_Click(object sender, EventArgs e)
         {
-            listViewPlayers.BeginUpdate();
-            listViewPlayers.Items.Clear();
-            listViewPlayers.EndUpdate();
+            ClearListViews();
 
             FormSourceWeight f = new FormSourceWeight();
             f.ShowDialog();
@@ -78,8 +85,7 @@ namespace TennisBole
 
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
-            listViewPlayers.Items.Clear();
-            listViewCountry.Items.Clear();
+            ClearListViews();
 
             FormFetch f = new FormFetch();
             f.ShowDialog();
