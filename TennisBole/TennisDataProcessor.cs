@@ -252,8 +252,9 @@ namespace TennisBole
 
             return items;
         }
-        public static int GlobalMaxAge { get; set; } = 18;
+        public static int GlobalMaxAge { get; set; } = DefaultGlobalMaxAge;
         public static readonly int NoGlobalMaxAge = -1;
+        public static readonly int DefaultGlobalMaxAge = 18;
         public record SpecificLimit
         {
             public string Nationality;

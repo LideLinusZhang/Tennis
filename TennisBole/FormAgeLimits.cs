@@ -90,6 +90,10 @@ namespace TennisBole
 
             listViewLimits.Items.Clear();
 
+            ListViewItem defaultLimitItem = new ListViewItem(IOCConverter.CountryNameWildcard);
+            defaultLimitItem.SubItems.Add(TennisDataProcessor.DefaultGlobalMaxAge.ToString());
+            listViewLimits.Items.Add(defaultLimitItem);
+
             listViewLimits.EndUpdate();
         }
 
