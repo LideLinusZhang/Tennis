@@ -203,6 +203,8 @@ namespace TennisBole
                 else
                     player.MyRank = (player.UTR * UTRWeight + player.ATP * ATPWeight) / 100;
             }
+
+            Players.Sort((x, y) => -x.MyRank.CompareTo(y.MyRank));
         }
         public static List<ListViewItem> GetListViewItems()
         {

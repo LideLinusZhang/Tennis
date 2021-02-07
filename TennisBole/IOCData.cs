@@ -388,7 +388,7 @@ namespace TennisBole
             "ESP",
             "SRI",
             "SUD",
-            "SUR",
+            "SRB",
             "SWZ",
             "SWE",
             "SUI",

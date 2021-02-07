@@ -40,6 +40,7 @@ namespace TennisBole
             this.buttonAgeLimits = new System.Windows.Forms.Button();
             this.buttonShowData = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.buttonUpdate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listViewPlayers
@@ -52,12 +53,12 @@ namespace TennisBole
             this.columnHeaderUTR,
             this.columnHeaderATP,
             this.columnHeaderMyRank});
+            this.listViewPlayers.GridLines = true;
             this.listViewPlayers.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewPlayers.HideSelection = false;
             this.listViewPlayers.Location = new System.Drawing.Point(212, 12);
             this.listViewPlayers.Name = "listViewPlayers";
             this.listViewPlayers.Size = new System.Drawing.Size(617, 399);
-            this.listViewPlayers.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewPlayers.TabIndex = 0;
             this.listViewPlayers.UseCompatibleStateImageBehavior = false;
             this.listViewPlayers.View = System.Windows.Forms.View.Details;
@@ -111,12 +112,13 @@ namespace TennisBole
             // 
             // buttonShowData
             // 
+            this.buttonShowData.BackColor = System.Drawing.SystemColors.ControlLight;
             this.buttonShowData.Location = new System.Drawing.Point(12, 334);
             this.buttonShowData.Name = "buttonShowData";
             this.buttonShowData.Size = new System.Drawing.Size(194, 77);
             this.buttonShowData.TabIndex = 2;
             this.buttonShowData.Text = "Show Data";
-            this.buttonShowData.UseVisualStyleBackColor = true;
+            this.buttonShowData.UseVisualStyleBackColor = false;
             this.buttonShowData.Click += new System.EventHandler(this.buttonShowData_Click);
             // 
             // button1
@@ -129,11 +131,21 @@ namespace TennisBole
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonUpdate
+            // 
+            this.buttonUpdate.Location = new System.Drawing.Point(12, 286);
+            this.buttonUpdate.Name = "buttonUpdate";
+            this.buttonUpdate.Size = new System.Drawing.Size(194, 42);
+            this.buttonUpdate.TabIndex = 4;
+            this.buttonUpdate.Text = "Update Data";
+            this.buttonUpdate.UseVisualStyleBackColor = true;
+            // 
             // FormTennis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 423);
+            this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonShowData);
             this.Controls.Add(this.buttonAgeLimits);
@@ -142,6 +154,7 @@ namespace TennisBole
             this.MaximizeBox = false;
             this.Name = "FormTennis";
             this.Text = "Tennis Bole";
+            this.Load += new System.EventHandler(this.FormTennis_Load);
             this.ResumeLayout(false);
 
         }
@@ -159,6 +172,7 @@ namespace TennisBole
         private System.Windows.Forms.Button buttonAgeLimits;
         private System.Windows.Forms.Button buttonShowData;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonUpdate;
     }
 }
 

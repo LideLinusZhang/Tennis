@@ -49,5 +49,10 @@ namespace TennisBole
                 listViewPlayers.Items.Add(limitItem);
             listViewPlayers.EndUpdate();
         }
+
+        private void FormTennis_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
