@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tennis
+namespace TennisBole
 {
     public static partial class IOCConverter
     {

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 using CsvHelper;
 
-namespace Tennis
+namespace TennisBole
 {
     public static class TennisDataProcessor
     {
@@ -192,12 +192,13 @@ namespace Tennis
 
             return items;
         }
-        public static int GlobalMaxAge { get; set; } = -1;
+        public static int GlobalMaxAge { get; set; } = 18;
+        public static readonly int NoGlobalMaxAge = -1;
         public record SpecificLimit
         {
             public string Nationality;
             public int Age;
         }
-        public static List<SpecificLimit> SpecificLimits = new List<SpecificLimit>();
+        public static List<SpecificLimit> SpecificLimits { get; set; } = new List<SpecificLimit>();
     }
 }

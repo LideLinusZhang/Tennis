@@ -15,22 +15,52 @@ namespace TennisBole
         public FormAgeLimits()
         {
             InitializeComponent();
+
+            comboBoxNationality.SelectedIndex = 0;
+
+            ImportLimitsToListView(listViewLimits);
+        }
+
+        private void ImportLimitsToListView(ListView target)
+        {
+            target.BeginUpdate();
+
+            if(TennisDataProcessor.GlobalMaxAge!=TennisDataProcessor.NoGlobalMaxAge)
+            {
+                ListViewItem globalLimitItem = new ListViewItem(IOCConverter.CountryNameWildcard);
+                globalLimitItem.SubItems.Add(TennisDataProcessor.GlobalMaxAge.ToString());
+                target.Items.Add(globalLimitItem);
+            }
+
+            foreach (TennisDataProcessor.SpecificLimit limit in TennisDataProcessor.SpecificLimits)
+            {
+                ListViewItem limitItem = new ListViewItem(limit.Nationality);
+                limitItem.SubItems.Add(limit.Age.ToString());
+                target.Items.Add(limitItem);
+            }
+
+            target.EndUpdate();
         }
 
         private void buttonAddLimit_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(comboBoxNationality.Text) &&
-                numericUpDownAge.Value != 0)
+            if (!string.IsNullOrEmpty(comboBoxNationality.Text))
             {
                 listViewLimits.BeginUpdate();
 
                 string nationality = comboBoxNationality.Text;
                 string age = Convert.ToInt32(numericUpDownAge.Value).ToString();
 
-                foreach(ListViewItem limitItem in listViewLimits.Items.Find(nationality,true))
+                List<ListViewItem> limitItemsToRemove = new List<ListViewItem>();
+
+                foreach(ListViewItem limitItem in listViewLimits.Items)
                 {
-                    listViewLimits.Items.Remove(limitItem);
+                    if(limitItem.Text.Equals(nationality))
+                        limitItemsToRemove.Add(limitItem);
                 }
+
+                foreach (ListViewItem limitItem in limitItemsToRemove)
+                    listViewLimits.Items.Remove(limitItem);
 
                 ListViewItem newLimitItem = new ListViewItem(nationality);
                 newLimitItem.SubItems.Add(age);
@@ -61,6 +91,37 @@ namespace TennisBole
             listViewLimits.Items.Clear();
 
             listViewLimits.EndUpdate();
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void FormAgeLimits_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bool globalLimitAdded = false;
+
+            foreach(ListViewItem limitItem in listViewLimits.Items)
+            {
+                if (limitItem.Text.Equals(IOCConverter.CountryNameWildcard))
+                {
+                    TennisDataProcessor.GlobalMaxAge = int.Parse(limitItem.SubItems[1].Text);
+                    globalLimitAdded = true;
+                }
+                else
+                {
+                    TennisDataProcessor.SpecificLimit limit = new TennisDataProcessor.SpecificLimit();
+
+                    limit.Nationality = IOCConverter.CountryNameToCode(limitItem.Text);
+                    limit.Age = int.Parse(limitItem.SubItems[1].Text);
+
+                    TennisDataProcessor.SpecificLimits.Add(limit);
+                }
+            }
+
+            if (!globalLimitAdded)
+                TennisDataProcessor.GlobalMaxAge = TennisDataProcessor.NoGlobalMaxAge;
         }
     }
 }

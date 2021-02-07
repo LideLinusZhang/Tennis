@@ -34,12 +34,13 @@ namespace TennisBole
             this.numericUpDownAge = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.listViewLimits = new System.Windows.Forms.ListView();
+            this.columnHeaderNationality = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderAge = new System.Windows.Forms.ColumnHeader();
             this.buttonAddLimit = new System.Windows.Forms.Button();
             this.buttonRemoveLimit = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.columnHeaderNationality = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderAge = new System.Windows.Forms.ColumnHeader();
+            this.labelNote = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAge)).BeginInit();
             this.SuspendLayout();
             // 
@@ -288,12 +289,23 @@ namespace TennisBole
             this.columnHeaderAge});
             this.listViewLimits.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewLimits.HideSelection = false;
-            this.listViewLimits.Location = new System.Drawing.Point(12, 112);
+            this.listViewLimits.Location = new System.Drawing.Point(12, 148);
             this.listViewLimits.Name = "listViewLimits";
-            this.listViewLimits.Size = new System.Drawing.Size(258, 197);
+            this.listViewLimits.Size = new System.Drawing.Size(258, 183);
             this.listViewLimits.TabIndex = 4;
             this.listViewLimits.UseCompatibleStateImageBehavior = false;
             this.listViewLimits.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderNationality
+            // 
+            this.columnHeaderNationality.Name = "columnHeaderNationality";
+            this.columnHeaderNationality.Text = "Nationality";
+            this.columnHeaderNationality.Width = 150;
+            // 
+            // columnHeaderAge
+            // 
+            this.columnHeaderAge.Name = "columnHeaderAge";
+            this.columnHeaderAge.Text = "Age";
             // 
             // buttonAddLimit
             // 
@@ -317,7 +329,7 @@ namespace TennisBole
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(114, 315);
+            this.buttonReset.Location = new System.Drawing.Point(114, 337);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(75, 23);
             this.buttonReset.TabIndex = 7;
@@ -327,29 +339,28 @@ namespace TennisBole
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(195, 315);
+            this.buttonOK.Location = new System.Drawing.Point(195, 337);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 8;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // columnHeaderNationality
+            // labelNote
             // 
-            this.columnHeaderNationality.Name = "columnHeaderNationality";
-            this.columnHeaderNationality.Text = "Nationality";
-            this.columnHeaderNationality.Width = 150;
-            // 
-            // columnHeaderAge
-            // 
-            this.columnHeaderAge.Name = "columnHeaderAge";
-            this.columnHeaderAge.Text = "Age";
+            this.labelNote.Location = new System.Drawing.Point(12, 109);
+            this.labelNote.Name = "labelNote";
+            this.labelNote.Size = new System.Drawing.Size(258, 36);
+            this.labelNote.TabIndex = 9;
+            this.labelNote.Text = "Note: Specific nationality limits override the global limit. ";
             // 
             // FormAgeLimits
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 346);
+            this.ClientSize = new System.Drawing.Size(282, 372);
+            this.Controls.Add(this.labelNote);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.buttonRemoveLimit);
@@ -363,6 +374,7 @@ namespace TennisBole
             this.MaximizeBox = false;
             this.Name = "FormAgeLimits";
             this.Text = "Age Limits Setting";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormAgeLimits_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAge)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -382,5 +394,6 @@ namespace TennisBole
         private System.Windows.Forms.Button buttonRemoveLimit;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.Button buttonOK;
+        private System.Windows.Forms.Label labelNote;
     }
 }
