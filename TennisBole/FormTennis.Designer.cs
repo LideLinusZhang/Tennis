@@ -50,7 +50,7 @@ namespace TennisBole
             this.columnHeaderAvgATP = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderAvgMyRank = new System.Windows.Forms.ColumnHeader();
             this.labelCountry = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelAuthors = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listViewPlayers
@@ -122,7 +122,6 @@ namespace TennisBole
             // 
             // buttonShowData
             // 
-            this.buttonShowData.BackColor = System.Drawing.SystemColors.ControlLight;
             this.buttonShowData.Enabled = false;
             this.buttonShowData.Location = new System.Drawing.Point(12, 318);
             this.buttonShowData.Name = "buttonShowData";
@@ -217,22 +216,22 @@ namespace TennisBole
             this.labelCountry.TabIndex = 7;
             this.labelCountry.Text = "Country Data:";
             // 
-            // label1
+            // labelAuthors
             // 
-            this.label1.AutoEllipsis = true;
-            this.label1.Location = new System.Drawing.Point(12, 93);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(194, 128);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Authors:\r\nTing Li, \r\nLide Zhang,\r\nRuiyang Zhou.";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelAuthors.AutoEllipsis = true;
+            this.labelAuthors.Location = new System.Drawing.Point(12, 93);
+            this.labelAuthors.Name = "labelAuthors";
+            this.labelAuthors.Size = new System.Drawing.Size(194, 128);
+            this.labelAuthors.TabIndex = 8;
+            this.labelAuthors.Text = "Authors:\r\nTing Li, \r\nLide Zhang,\r\nRuiyang Zhou.";
+            this.labelAuthors.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // FormTennis
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(841, 414);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelAuthors);
             this.Controls.Add(this.labelCountry);
             this.Controls.Add(this.listViewCountry);
             this.Controls.Add(this.labelPlayer);
@@ -274,7 +273,7 @@ namespace TennisBole
         private System.Windows.Forms.ColumnHeader columnHeaderAvgMyRank;
         private System.Windows.Forms.ColumnHeader columnHeaderTotal;
         private System.Windows.Forms.Label labelCountry;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelAuthors;
     }
 }
 
