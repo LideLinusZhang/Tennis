@@ -69,9 +69,15 @@ namespace TennisBole
             listViewCountry.EndUpdate();
         }
 
-        private void FormTennis_Load(object sender, EventArgs e)
+        private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            listViewPlayers.Items.Clear();
+            listViewCountry.Items.Clear();
 
+            FormFetch f = new FormFetch();
+            f.ShowDialog();
+
+            buttonShowData.Enabled = true;
         }
     }
 }

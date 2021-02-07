@@ -114,7 +114,7 @@ namespace TennisBole
                     combinedPlayer.Gender = UTRPlayer.Gender;
                     combinedPlayer.Nationality = UTRPlayer.Nationality;
                     combinedPlayer.UTR = UTRPlayer.Ranking;
-                    combinedPlayer.ATP = (int) ATPPlayer.Ranking;
+                    combinedPlayer.ATP = (int)ATPPlayer.Ranking;
 
                     ATP.Players.Remove(ATPPlayer);
                 }
@@ -125,7 +125,7 @@ namespace TennisBole
                     combinedPlayer.Gender = UTRPlayer.Gender;
                     combinedPlayer.Nationality = UTRPlayer.Nationality;
                     combinedPlayer.UTR = UTRPlayer.Ranking;
-                    combinedPlayer.ATP = (int) RankingNotAvailable;
+                    combinedPlayer.ATP = (int)RankingNotAvailable;
                 }
 
                 Players.Add(combinedPlayer);
@@ -146,7 +146,7 @@ namespace TennisBole
                 combinedPlayer.Gender = ATPPlayer.Gender;
                 combinedPlayer.Nationality = ATPPlayer.Nationality;
                 combinedPlayer.UTR = RankingNotAvailable;
-                combinedPlayer.ATP = (int) ATPPlayer.Ranking;
+                combinedPlayer.ATP = (int)ATPPlayer.Ranking;
 
                 Players.Add(combinedPlayer);
             }
@@ -245,7 +245,7 @@ namespace TennisBole
                 if (player.ATP == RankingNotAvailable)
                     item.SubItems.Add(DataNotAvailable);
                 else
-                    item.SubItems.Add(player.ATP.ToString(DoubleToStringFormat));
+                    item.SubItems.Add(player.ATP.ToString());
                 item.SubItems.Add(player.MyRank.ToString(DoubleToStringFormat));
 
                 items.Add(item);

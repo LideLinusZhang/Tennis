@@ -44,10 +44,10 @@ namespace TennisBole
             this.labelPlayer = new System.Windows.Forms.Label();
             this.listViewCountry = new System.Windows.Forms.ListView();
             this.columnHeaderCountry = new System.Windows.Forms.ColumnHeader();
+            this.columnHeaderTotal = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderAvgUTR = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderAvgATP = new System.Windows.Forms.ColumnHeader();
             this.columnHeaderAvgMyRank = new System.Windows.Forms.ColumnHeader();
-            this.columnHeaderTotal = new System.Windows.Forms.ColumnHeader();
             this.labelCountry = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -114,7 +114,7 @@ namespace TennisBole
             this.buttonAgeLimits.Name = "buttonAgeLimits";
             this.buttonAgeLimits.Size = new System.Drawing.Size(194, 36);
             this.buttonAgeLimits.TabIndex = 1;
-            this.buttonAgeLimits.Text = "Age Limits Setting";
+            this.buttonAgeLimits.Text = "Age/Country Limits Setting";
             this.buttonAgeLimits.UseVisualStyleBackColor = true;
             this.buttonAgeLimits.Click += new System.EventHandler(this.buttonAgeLimits_Click);
             // 
@@ -148,6 +148,7 @@ namespace TennisBole
             this.buttonUpdate.TabIndex = 4;
             this.buttonUpdate.Text = "Update Data";
             this.buttonUpdate.UseVisualStyleBackColor = true;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
             // 
             // labelPlayer
             // 
@@ -182,6 +183,12 @@ namespace TennisBole
             this.columnHeaderCountry.Text = "Country";
             this.columnHeaderCountry.Width = 150;
             // 
+            // columnHeaderTotal
+            // 
+            this.columnHeaderTotal.Name = "columnHeaderTotal";
+            this.columnHeaderTotal.Text = "Total Player";
+            this.columnHeaderTotal.Width = 80;
+            // 
             // columnHeaderAvgUTR
             // 
             this.columnHeaderAvgUTR.Name = "columnHeaderAvgUTR";
@@ -198,12 +205,6 @@ namespace TennisBole
             this.columnHeaderAvgMyRank.Name = "columnHeaderAvgMyRank";
             this.columnHeaderAvgMyRank.Text = "Avg MyRank";
             this.columnHeaderAvgMyRank.Width = 100;
-            // 
-            // columnHeaderTotal
-            // 
-            this.columnHeaderTotal.Name = "columnHeaderTotal";
-            this.columnHeaderTotal.Text = "Total Player";
-            this.columnHeaderTotal.Width = 80;
             // 
             // labelCountry
             // 
@@ -231,7 +232,6 @@ namespace TennisBole
             this.MaximizeBox = false;
             this.Name = "FormTennis";
             this.Text = "Tennis Bole";
-            this.Load += new System.EventHandler(this.FormTennis_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
