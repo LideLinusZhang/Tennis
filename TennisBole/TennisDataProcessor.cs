@@ -96,7 +96,7 @@ namespace TennisBole
 
             foreach (TennisRawData.Player UTRPlayer in UTR.Players)
             {
-                if (UTRPlayer.Age.Equals("None") || 
+                if (UTRPlayer.Age.Equals("None") ||
                     UTRPlayer.Nationality.Equals("None") ||
                     UTRPlayer.Gender.Equals("None"))
                     continue;
@@ -151,7 +151,7 @@ namespace TennisBole
 
             Players = Players.Distinct().ToList();
         }
-        public static void EliminateOverAgedPlayer()
+        private static void EliminateOverAgedPlayer()
         {
             List<Player> toBeEliminated = new List<Player>();
 
@@ -179,22 +179,22 @@ namespace TennisBole
                 Players.Remove(player);
         }
         private static readonly double MinimumUTRRanking = 11.0;
-        public static void EliminateLowUTRPlayer()
+        private static void EliminateLowUTRPlayer()
         {
             List<Player> toBeEliminated = new List<Player>();
 
             foreach (Player player in Players)
             {
-                if (player.UTR<MinimumUTRRanking)
+                if (player.UTR < MinimumUTRRanking)
                     toBeEliminated.Add(player);
             }
 
             foreach (Player player in toBeEliminated)
                 Players.Remove(player);
         }
-        public static void CalculateMyRank()
+        private static void CalculateMyRank()
         {
-            foreach(Player player in Players)
+            foreach (Player player in Players)
             {
                 if (player.UTR == RankingNotAvailable)
                     player.MyRank = player.ATP;
@@ -206,8 +206,12 @@ namespace TennisBole
 
             Players.Sort((x, y) => -x.MyRank.CompareTo(y.MyRank));
         }
-        public static List<ListViewItem> GetListViewItems()
+        public static List<ListViewItem> GetPlayerListViewItems()
         {
+            TennisDataProcessor.EliminateOverAgedPlayer();
+            TennisDataProcessor.EliminateLowUTRPlayer();
+            TennisDataProcessor.CalculateMyRank();
+
             List<ListViewItem> items = new List<ListViewItem>();
 
             foreach (Player player in Players)
@@ -217,15 +221,15 @@ namespace TennisBole
                 item.SubItems.Add(player.Age.ToString());
                 item.SubItems.Add(player.Gender);
                 item.SubItems.Add(IOCConverter.CodeToCountryName(player.Nationality));
-                if(player.UTR==RankingNotAvailable)
+                if (player.UTR == RankingNotAvailable)
                     item.SubItems.Add("N/A");
                 else
-                    item.SubItems.Add(player.UTR.ToString());
+                    item.SubItems.Add(player.UTR.ToString("N2"));
                 if (player.ATP == RankingNotAvailable)
                     item.SubItems.Add("N/A");
                 else
-                    item.SubItems.Add(player.ATP.ToString());
-                item.SubItems.Add(player.MyRank.ToString());
+                    item.SubItems.Add(player.ATP.ToString("N2"));
+                item.SubItems.Add(player.MyRank.ToString("N2"));
 
                 items.Add(item);
             }
@@ -244,5 +248,74 @@ namespace TennisBole
         public static readonly int DefaultWeight = 50;
         public static int UTRWeight { get; set; } = DefaultWeight;
         public static int ATPWeight { get; set; } = DefaultWeight;
+
+        public record Country
+        {
+            public string Code;
+
+            public double SumUTR;
+            public double SumATP;
+            public double SumMyRank;
+
+            public double AvgUTR;
+            public double AvgATP;
+            public double AvgMyRank;
+
+            public int TotalPlayers;
+        }
+        private static List<Country> Countries { get; set; } = new List<Country>();
+        private static void GenerateCountryData()
+        {
+            foreach (Player player in Players)
+            {
+                if (Countries.Exists((x) => x.Code.Equals(player.Nationality)))
+                {
+                    Country country = Countries.FindLast((x) => x.Code.Equals(player.Nationality));
+
+                    country.TotalPlayers++;
+                    country.SumUTR += player.UTR;
+                    country.SumATP += player.ATP;
+                    country.SumMyRank += player.MyRank;
+                }
+                else
+                {
+                    Country country = new Country();
+
+                    country.Code = player.Nationality;
+                    country.TotalPlayers = 1;
+                    country.SumUTR = player.UTR;
+                    country.SumATP = player.ATP;
+                    country.SumMyRank = player.MyRank;
+
+                    Countries.Add(country);
+                }
+            }
+
+            Countries.ForEach((x) =>
+            {
+                x.AvgUTR = x.SumUTR / x.TotalPlayers;
+                x.AvgATP = x.SumATP / x.TotalPlayers;
+                x.AvgMyRank = x.SumMyRank / x.TotalPlayers;
+            });
+            Countries.Sort((x, y) => -x.AvgMyRank.CompareTo(y.AvgMyRank));
+        }
+        public static List<ListViewItem> GetCountryListViewItems()
+        {
+            TennisDataProcessor.GenerateCountryData();
+            List<ListViewItem> countryListViewItems = new List<ListViewItem>();
+
+            foreach (Country country in Countries)
+            {
+                ListViewItem countryItem = new ListViewItem(IOCConverter.CodeToCountryName(country.Code));
+                countryItem.SubItems.Add(country.TotalPlayers.ToString());
+                countryItem.SubItems.Add(country.AvgUTR.ToString("N2"));
+                countryItem.SubItems.Add(country.AvgATP.ToString("N2"));
+                countryItem.SubItems.Add(country.AvgMyRank.ToString("N2"));
+
+                countryListViewItems.Add(countryItem);
+            }
+
+            return countryListViewItems;
+        }
     }
 }

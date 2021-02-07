@@ -34,7 +34,7 @@ namespace TennisBole
 
             foreach (TennisDataProcessor.SpecificLimit limit in TennisDataProcessor.SpecificLimits)
             {
-                ListViewItem limitItem = new ListViewItem(limit.Nationality);
+                ListViewItem limitItem = new ListViewItem(IOCConverter.CodeToCountryName(limit.Nationality));
                 limitItem.SubItems.Add(limit.Age.ToString());
                 target.Items.Add(limitItem);
             }
@@ -101,6 +101,7 @@ namespace TennisBole
         private void FormAgeLimits_FormClosed(object sender, FormClosedEventArgs e)
         {
             bool globalLimitAdded = false;
+            TennisDataProcessor.SpecificLimits.Clear();
 
             foreach(ListViewItem limitItem in listViewLimits.Items)
             {

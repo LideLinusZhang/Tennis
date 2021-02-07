@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,24 @@ namespace TennisBole
         public FormTennis()
         {
             InitializeComponent();
+
+            if(DataFilesExist())
+            {
+                TennisDataProcessor.ImportCSV(UTRDataFileName, ATPDataFileName);
+                buttonShowData.Enabled = true;
+            }
+            else
+                buttonUpdate.Text = "Fetch Data";
+        }
+        private readonly string UTRDataFileName = "utr_data.csv";
+        private readonly string ATPDataFileName = "atp_data.csv";
+        private bool DataFilesExist()
+        {
+            if (File.Exists(UTRDataFileName) &&
+                File.Exists(ATPDataFileName))
+                return true;
+            else
+                return false;
         }
 
         private void buttonAgeLimits_Click(object sender, EventArgs e)
@@ -27,7 +46,7 @@ namespace TennisBole
             f.ShowDialog();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonWeight_Click(object sender, EventArgs e)
         {
             listViewPlayers.BeginUpdate();
             listViewPlayers.Items.Clear();
@@ -39,15 +58,15 @@ namespace TennisBole
 
         private void buttonShowData_Click(object sender, EventArgs e)
         {
-            TennisDataProcessor.ImportCSV("testUTR.csv", "testATP.csv");
-            TennisDataProcessor.EliminateOverAgedPlayer();
-            TennisDataProcessor.EliminateLowUTRPlayer();
-            TennisDataProcessor.CalculateMyRank();
-
             listViewPlayers.BeginUpdate();
-            foreach (ListViewItem limitItem in TennisDataProcessor.GetListViewItems())
-                listViewPlayers.Items.Add(limitItem);
+            foreach (ListViewItem playerItem in TennisDataProcessor.GetPlayerListViewItems())
+                listViewPlayers.Items.Add(playerItem);
             listViewPlayers.EndUpdate();
+
+            listViewCountry.BeginUpdate();
+            foreach (ListViewItem countryItem in TennisDataProcessor.GetCountryListViewItems())
+                listViewCountry.Items.Add(countryItem);
+            listViewCountry.EndUpdate();
         }
 
         private void FormTennis_Load(object sender, EventArgs e)
