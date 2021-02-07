@@ -326,7 +326,7 @@ namespace TennisBole
                 countryItem.SubItems.Add(country.TotalPlayers.ToString());
                 countryItem.SubItems.Add(country.AvgUTR.ToString(DoubleToStringFormat));
                 if(country.AvgATP!=RankingNotAvailable)
-                    countryItem.SubItems.Add(country.AvgATP.ToString(DoubleToStringFormat));
+                    countryItem.SubItems.Add(country.AvgATP.ToString());
                 else
                     countryItem.SubItems.Add(DataNotAvailableString);
                 countryItem.SubItems.Add(country.AvgMyRank.ToString(DoubleToStringFormat));
