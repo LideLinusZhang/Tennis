@@ -70,7 +70,7 @@ namespace TennisBole
             public string Gender { get; set; }
             public string Nationality { get; set; }
             public double UTR { get; set; }
-            public double ATP { get; set; }
+            public int ATP { get; set; }
             public double MyRank { get; set; }
             public bool Equals(Player other)
             {
@@ -114,7 +114,7 @@ namespace TennisBole
                     combinedPlayer.Gender = UTRPlayer.Gender;
                     combinedPlayer.Nationality = UTRPlayer.Nationality;
                     combinedPlayer.UTR = UTRPlayer.Ranking;
-                    combinedPlayer.ATP = ATPPlayer.Ranking;
+                    combinedPlayer.ATP = (int) ATPPlayer.Ranking;
 
                     ATP.Players.Remove(ATPPlayer);
                 }
@@ -125,7 +125,7 @@ namespace TennisBole
                     combinedPlayer.Gender = UTRPlayer.Gender;
                     combinedPlayer.Nationality = UTRPlayer.Nationality;
                     combinedPlayer.UTR = UTRPlayer.Ranking;
-                    combinedPlayer.ATP = RankingNotAvailable;
+                    combinedPlayer.ATP = (int) RankingNotAvailable;
                 }
 
                 Players.Add(combinedPlayer);
@@ -146,7 +146,7 @@ namespace TennisBole
                 combinedPlayer.Gender = ATPPlayer.Gender;
                 combinedPlayer.Nationality = ATPPlayer.Nationality;
                 combinedPlayer.UTR = RankingNotAvailable;
-                combinedPlayer.ATP = ATPPlayer.Ranking;
+                combinedPlayer.ATP = (int) ATPPlayer.Ranking;
 
                 Players.Add(combinedPlayer);
             }
@@ -196,6 +196,13 @@ namespace TennisBole
         }
         private static void CalculateMyRank()
         {
+            int maxATP = 0;
+            foreach (Player player in Players)
+            {
+                if (player.ATP > maxATP)
+                    maxATP = player.ATP;
+            }
+
             foreach (Player player in Players)
             {
                 if (player.UTR == RankingNotAvailable)
@@ -203,10 +210,16 @@ namespace TennisBole
                 else if (player.ATP == RankingNotAvailable)
                     player.MyRank = player.UTR;
                 else
-                    player.MyRank = (player.UTR * UTRWeight + player.ATP * ATPWeight) / 100;
+                    player.MyRank = CalculateMyRank(player.UTR, player.ATP, maxATP);
             }
 
             Players.Sort((x, y) => -x.MyRank.CompareTo(y.MyRank));
+        }
+        private static double CalculateMyRank(double UTR, int ATP, int maxATP)
+        {
+            const double MyRankMax = 16.5;
+            double processedATP = (MyRankMax - 1) * ((maxATP - ATP + 1) / maxATP) + 1;
+            return (UTR * UTRWeight + processedATP * ATPWeight) / 100;
         }
         public static List<ListViewItem> GetPlayerListViewItems()
         {
